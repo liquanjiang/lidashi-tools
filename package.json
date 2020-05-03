@@ -1,0 +1,35 @@
+{
+  "name": "lidashi-tools",
+  "version": "1.1.0",
+  "description": "Javascript常用的小工具",
+  "main": "index.js",
+  "typings": "./index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liquanjiang/lidashi-tools.git"
+  },
+  "keywords": [
+    "小工具",
+    "tools",
+    "数字转为汉字",
+    "金额数字转中文",
+    "查询URL参数",
+    "number2CN",
+    "email validate",
+    "phone number validate",
+    "ID validate",
+    "身份证校验",
+    "手机号码校验",
+    "邮箱校验",
+    "queryParams",
+    "全角半角转换",
+    "获取浏览器信息",
+    "browser information"
+  ],
+  "author": "lidashi",
+  "license": "ISC"
+}
