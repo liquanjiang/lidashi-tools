@@ -942,14 +942,22 @@ const LIDASHITools: Tools = {
         console.error(error)
         return error
       }
+      if (number.length > 17) {
+        const error = 'JS中超过17位的浮点数将会精度丢失，故参数含小数点不要超过17位'
+        console.error(error)
+        return error
+      }
     } else {
       numbers = number
     }
+
     if (numbers > 9007199254740992) {
       const error = 'JS中超过2的53次方的数字会精度丢失，故参数不要超过9007199254740992'
       console.error(error)
       return error
     }
+
+
     const littleNum = LIDASHITools.littleNumber2CN(numbers, isBig, isMoney)
     let num = Math.floor(numbers)
     let unitPos = 0

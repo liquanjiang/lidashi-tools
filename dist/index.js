@@ -810,6 +810,11 @@ var LIDASHITools = {
                 console.error(error);
                 return error;
             }
+            if (number.length > 17) {
+                var error = 'JS中超过17位的浮点数将会精度丢失，故参数含小数点不要超过17位';
+                console.error(error);
+                return error;
+            }
         }
         else {
             numbers = number;
