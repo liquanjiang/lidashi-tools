@@ -702,6 +702,7 @@ var LIDASHITools = {
         if (isMoney === void 0) { isMoney = false; }
         var chnNumChar = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
         var chnBigChar = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+        // 如果需要进行大写转换，或者需要转换金额时，采用第二套字体
         var stringArr = isBig || isMoney ? chnBigChar : chnNumChar;
         // 因为在金额中，小数点通常保留两位，那么小数点后的字符就可以辨识为x角x分
         var numberString = number.toString();
@@ -712,16 +713,15 @@ var LIDASHITools = {
             console.error(error);
             return error;
         }
+        // 需要转换为人民币大写金额时
         if (isMoney) {
             if (flag) {
                 var index = numberString.indexOf('.');
                 if (index <= numberString.length - 2) {
                     // 说明其小数点后超过两位
-                    var num = number.toFixed(2);
-                    var numString = num.toString();
+                    var numString = number.toFixed(2).toString();
                     var str = numString.slice(index + 1);
-                    var arr = Array.from(str);
-                    return arr.reduce(function (total, item, idx) {
+                    return Array.from(str).reduce(function (total, item, idx) {
                         var strRmb = idx === 0 ? '角' : '分';
                         var strs = stringArr[Number.parseInt(item)];
                         total += idx <= 1 ? "" + strs + strRmb : '';
@@ -730,17 +730,17 @@ var LIDASHITools = {
                 }
                 else {
                     // 说明小数点后只有一位
-                    var num = number.toFixed(1);
-                    var numString = num.toString();
+                    var numString = number.toFixed(1).toString();
                     var str = numString.slice(index + 1);
                     var strs = stringArr[Number.parseInt(str)];
                     return strs + "\u89D2";
                 }
             }
-            else {
-                return '圆整';
+            else { // 没有小数点时返回整
+                return '整';
             }
         }
+        // 当不是人民币的大写数字时，只需要转为普通简写汉字，并需要将小数点及以后得数字表示出来
         if (flag) {
             var index = numberString.indexOf('.');
             var str = numberString.slice(index);
@@ -750,7 +750,7 @@ var LIDASHITools = {
             }
             return a;
         }
-        else {
+        else { // 没有小数点时返回空字符串
             return '';
         }
     },
@@ -767,6 +767,7 @@ var LIDASHITools = {
         var chnNumChar = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
         var chnBigChar = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
         var chnUnitChar = isMoney ? ['', '拾', '佰', '仟'] : ['', '十', '百', '千'];
+        // 如果需要进行大写转换，或者需要转换金额时，采用第二套字体
         var stringArr = isBig || isMoney ? chnBigChar : chnNumChar;
         var str = '', chnstr = '', zero = false, count = 0; //zero为是否进行补零， 第一次进行取余由于为个位数，默认不补零
         while (section > 0) {
@@ -801,6 +802,7 @@ var LIDASHITools = {
         var chnNumChar = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
         var chnBigChar = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
         var chnUnitSection = ['', '万', '亿', '万亿', '亿亿'];
+        // 如果需要进行大写转换，或者需要转换金额时，采用第二套字体
         var stringArr = isBig ? chnBigChar : chnNumChar;
         var numbers;
         if (typeof number === 'string') {
@@ -844,7 +846,7 @@ var LIDASHITools = {
             num = Math.floor(num / 10000);
             unitPos++;
         }
-        var s = isMoney ? '圆' : '';
+        var s = isMoney ? '元' : '';
         return "" + chnStr + s + littleNum;
     }
 };

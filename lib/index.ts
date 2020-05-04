@@ -837,6 +837,7 @@ const LIDASHITools: Tools = {
   littleNumber2CN(number, isBig = false, isMoney = false) {
     const chnNumChar = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
     const chnBigChar = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
+    // 如果需要进行大写转换，或者需要转换金额时，采用第二套字体
     const stringArr = isBig || isMoney ? chnBigChar : chnNumChar
     // 因为在金额中，小数点通常保留两位，那么小数点后的字符就可以辨识为x角x分
     const numberString = number.toString()
@@ -847,16 +848,15 @@ const LIDASHITools: Tools = {
       console.error(error)
       return error
     }
+    // 需要转换为人民币大写金额时
     if (isMoney) {
       if (flag) {
         const index = numberString.indexOf('.')
         if (index <= numberString.length - 2) {
           // 说明其小数点后超过两位
-          const num = number.toFixed(2)
-          const numString = num.toString()
+          const numString = number.toFixed(2).toString()
           const str = numString.slice(index + 1)
-          const arr = Array.from(str)
-          return arr.reduce((total, item, idx) => {
+          return Array.from(str).reduce((total, item, idx) => {
             const strRmb = idx === 0 ? '角' : '分'
             const strs = stringArr[Number.parseInt(item)]
             total += idx <= 1 ? `${strs}${strRmb}` : ''
@@ -864,16 +864,16 @@ const LIDASHITools: Tools = {
           }, '')
         } else {
           // 说明小数点后只有一位
-          const num = number.toFixed(1)
-          const numString = num.toString()
+          const numString = number.toFixed(1).toString()
           const str = numString.slice(index + 1)
           const strs = stringArr[Number.parseInt(str)]
           return `${strs}角`
         }
-      } else {
-        return '圆整'
+      } else { // 没有小数点时返回整
+        return '整'
       }
     }
+    // 当不是人民币的大写数字时，只需要转为普通简写汉字，并需要将小数点及以后得数字表示出来
     if (flag) {
       const index = numberString.indexOf('.')
       const str = numberString.slice(index)
@@ -882,7 +882,7 @@ const LIDASHITools: Tools = {
         a += stringArr[parseInt(str[i])]
       }
       return a
-    } else {
+    } else { // 没有小数点时返回空字符串
       return ''
     }
   },
@@ -899,17 +899,18 @@ const LIDASHITools: Tools = {
     const chnNumChar = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
     const chnBigChar = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
     const chnUnitChar = isMoney ? ['', '拾', '佰', '仟'] : ['', '十', '百', '千']
+    // 如果需要进行大写转换，或者需要转换金额时，采用第二套字体
     const stringArr = isBig || isMoney ? chnBigChar : chnNumChar
-    let str = '', chnstr = '', zero = false, count = 0   //zero为是否进行补零， 第一次进行取余由于为个位数，默认不补零
+    let str = '', chnstr = '', zero = false, count = 0  //zero为是否进行补零， 第一次进行取余由于为个位数，默认不补零
     while (section > 0) {
       const v = section % 10  //对数字取余10，得到的数即为个位数
-      if (v == 0) {                    //如果数字为零，则对字符串进行补零
+      if (v == 0) { //如果数字为零，则对字符串进行补零
         if (zero) {
-          zero = false        //如果遇到连续多次取余都是0，那么只需补一个零即可
+          zero = false  //如果遇到连续多次取余都是0，那么只需补一个零即可
           chnstr = stringArr[v] + chnstr
         }
       } else {
-        zero = true           //第一次取余之后，如果再次取余为零，则需要补零
+        zero = true   //第一次取余之后，如果再次取余为零，则需要补零
         str = stringArr[v]
         str += chnUnitChar[count]
         chnstr = str + chnstr
@@ -932,8 +933,8 @@ const LIDASHITools: Tools = {
     const chnNumChar = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
     const chnBigChar = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
     const chnUnitSection = ['', '万', '亿', '万亿', '亿亿']
+    // 如果需要进行大写转换，或者需要转换金额时，采用第二套字体
     const stringArr = isBig ? chnBigChar : chnNumChar
-
     let numbers
     if (typeof number === 'string') {
       numbers = Number.parseFloat(number)
@@ -957,7 +958,6 @@ const LIDASHITools: Tools = {
       return error
     }
 
-
     const littleNum = LIDASHITools.littleNumber2CN(numbers, isBig, isMoney)
     let num = Math.floor(numbers)
     let unitPos = 0
@@ -979,7 +979,7 @@ const LIDASHITools: Tools = {
       num = Math.floor(num / 10000)
       unitPos++
     }
-    const s = isMoney ? '圆' : ''
+    const s = isMoney ? '元' : ''
     return `${chnStr}${s}${littleNum}`
   }
 }
