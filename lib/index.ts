@@ -85,7 +85,7 @@ const LIDASHITools: Tools = {
    * 4. 超出精度范围的省略
    */
 
-  transformYuan2Fen(yuan) {
+  transformYuan2Fen(yuan: string | number): string | number {
     let error: string
     if (!yuan && yuan !== 0) {
       error = '参数不能为空'
@@ -114,7 +114,7 @@ const LIDASHITools: Tools = {
    * 4. 超出精度范围的则忽略
    */
 
-  transformFen2Yuan(fen) {
+  transformFen2Yuan(fen: string | number): string | number {
     let error: string
     if (!fen && fen !== 0) {
       error = '参数不能为空'
@@ -145,7 +145,7 @@ const LIDASHITools: Tools = {
    *
    */
 
-  randomString(len = 10, Array = []) {
+  randomString(len: number = 10, Array: Array<any> = []): string {
     if (len === 0) {
       const error = '不能传入长度为0的参数'
       console.error(error)
@@ -174,7 +174,7 @@ const LIDASHITools: Tools = {
    * 2. 如果传入的为空字符串，则返回空字符串
    */
 
-  string2FullWidth(str) {
+  string2FullWidth(str: string): string {
     let result = ''
     const len = str.length
     for (let i = 0; i < len; i++) {
@@ -196,7 +196,7 @@ const LIDASHITools: Tools = {
    * 2. 如果传入的为空字符串，则返回空字符串
    */
 
-  string2HalfWidth(str) {
+  string2HalfWidth(str: string): string {
     let result = ''
     const len = str.length
     for (let i = 0; i < len; i++) {
@@ -213,13 +213,13 @@ const LIDASHITools: Tools = {
   /**
    * 提取出一个url中的所有查询参数，如果有重复的key，则置为数组
    * @param {string} url
-   * @return {object} obj
+   * @return {object | string} obj
    * 1. 提取出所有的key和value，
    * 2. 如果key有重复的，则置为数组
    * 3. 如果为空，则置为空字符串或其指定的值
    */
 
-  queryParams(url) {
+  queryParams(url: string): object | string {
     let error: string
     let queryObject: AnyObject = {}
 
@@ -275,7 +275,7 @@ const LIDASHITools: Tools = {
    * @return {number | undefined} number
    */
 
-  maxOfArray(Array) {
+  maxOfArray(Array: number[]): number | undefined {
     if (Array.length === 0) {
       return undefined
     }
@@ -288,7 +288,7 @@ const LIDASHITools: Tools = {
    * @return {number | undefined} number
    */
 
-  minOfArray(Array) {
+  minOfArray(Array: number[]): number | undefined {
     if (Array.length === 0) {
       return undefined
     }
@@ -344,7 +344,7 @@ const LIDASHITools: Tools = {
      * @type {RegExpExecArray | null}
      */
 
-    const IEVersionArray = [
+    const IEVersionArray: any[] = [
       { type: '4.0', name: '8' }, { type: '5.0', name: '9' },
       { type: '6.0', name: '10' }, { type: '7.0', name: '11' },
     ]
@@ -376,7 +376,7 @@ const LIDASHITools: Tools = {
      * @type {RegExpExecArray | null}
      */
 
-    const isEdge = Edge.exec(userAgent)
+    const isEdge: RegExpExecArray | null = Edge.exec(userAgent)
     if (isEdge !== null) {
       const version = isEdge[2]
       browserInfo.isEdge = true
@@ -647,7 +647,7 @@ const LIDASHITools: Tools = {
    * @return boolean
    */
 
-  isValidatePhoneNumber(phone) {
+  isValidatePhoneNumber(phone: string | number) {
     const phoneString = String(phone)
     if (!phoneString || phoneString.length !== 11) {
       return false
@@ -743,7 +743,7 @@ const LIDASHITools: Tools = {
    * @return {boolean} boolean
    */
 
-  isValidateEmail(email) {
+  isValidateEmail(email: string): boolean {
     if (!email || !email.includes('@') || !email.includes('.')) {
       return false
     }
@@ -817,12 +817,13 @@ const LIDASHITools: Tools = {
 
   /**
    * 移除数组中的所有与指定元素相同的元素
-   * @return
-   * @param {[]} Array
+   * @return any[]
+   * @param {[]} array
    * @param {string | null | undefined | number | boolean} element
    */
-  removeFromArray(Array, element) {
-    return Array.filter((item) => item !== element)
+
+  removeFromArray(array: any[], element: string | null | undefined | number | boolean) {
+    return array.filter((item) => item !== element)
   },
 
   /**
@@ -834,7 +835,7 @@ const LIDASHITools: Tools = {
    *
    */
 
-  littleNumber2CN(number, isBig = false, isMoney = false) {
+  littleNumber2CN(number: number, isBig: boolean = false, isMoney: boolean = false) {
     const chnNumChar = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
     const chnBigChar = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
     // 如果需要进行大写转换，或者需要转换金额时，采用第二套字体

@@ -142,7 +142,7 @@ var LIDASHITools = {
     /**
      * 提取出一个url中的所有查询参数，如果有重复的key，则置为数组
      * @param {string} url
-     * @return {object} obj
+     * @return {object | string} obj
      * 1. 提取出所有的key和value，
      * 2. 如果key有重复的，则置为数组
      * 3. 如果为空，则置为空字符串或其指定的值
@@ -682,12 +682,12 @@ var LIDASHITools = {
     },
     /**
      * 移除数组中的所有与指定元素相同的元素
-     * @return
-     * @param {[]} Array
+     * @return any[]
+     * @param {[]} array
      * @param {string | null | undefined | number | boolean} element
      */
-    removeFromArray: function (Array, element) {
-        return Array.filter(function (item) { return item !== element; });
+    removeFromArray: function (array, element) {
+        return array.filter(function (item) { return item !== element; });
     },
     /**
      * 将小数点之后的数字全部转化为汉字
