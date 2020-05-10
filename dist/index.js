@@ -848,6 +848,18 @@ var LIDASHITools = {
         }
         var s = isMoney ? '元' : '';
         return "" + chnStr + s + littleNum;
-    }
+    },
+    /**
+     * 生成一个指定长度的的uuid字符串方法 (Universally Unique Identifier) 「通用唯一识别码」
+     * @param {number | undefined} Number
+     * @return {string} String
+     *
+     */
+    uuid: function (Number) {
+        if (Number === void 0) { Number = 18; }
+        var timestamp = (new Date()).valueOf().toString();
+        var string = LIDASHITools.randomString(Number);
+        return "" + string + timestamp;
+    },
 };
 exports.default = LIDASHITools;

@@ -29,6 +29,7 @@ interface Tools {
     littleNumber2CN: (number: number, isBig: boolean, isMoney: boolean) => string;
     sectionToChinese: (section: number, isBig: boolean, isMoney: boolean) => string;
     transformNumber2CN: (Number: number | string, isBig: boolean, isMoney: boolean) => string;
+    uuid: (Number: number | undefined) => string;
 }
 declare const LIDASHITools: Tools;
 export default LIDASHITools;

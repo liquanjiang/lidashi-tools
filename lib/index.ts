@@ -71,6 +71,9 @@ interface Tools {
 
   // 将金额的数字转为汉字形式的数字表示方法
   transformNumber2CN: (Number: number | string, isBig: boolean, isMoney: boolean) => string;
+
+  // 生成一个指定长度的，且不会重复的uuid，用于指定数据的唯一标识
+  uuid: (Number: number | undefined) => string;
 }
 
 const LIDASHITools: Tools = {
@@ -982,7 +985,20 @@ const LIDASHITools: Tools = {
     }
     const s = isMoney ? '元' : ''
     return `${chnStr}${s}${littleNum}`
-  }
+  },
+
+  /**
+   * 生成一个指定长度的的uuid字符串方法 (Universally Unique Identifier) 「通用唯一识别码」
+   * @param {number | undefined} Number
+   * @return {string} String
+   *
+   */
+
+  uuid(Number: number | undefined = 18) {
+    const timestamp = (new Date()).valueOf().toString()
+    const string = LIDASHITools.randomString(Number)
+    return `${string}${timestamp}`
+  },
 }
 
 export default LIDASHITools
